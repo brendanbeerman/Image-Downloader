@@ -1,0 +1,39 @@
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Scanner;
+
+public class driver {
+	
+	
+	public static void main (String args[]) {
+		Scanner sc = new Scanner(System.in);
+		
+		URL url = get_url(sc); 
+		sc.close();
+	}
+	
+	public static URL get_url (Scanner sc) {
+		String result;
+		
+		while (true) {
+			System.out.print("\nEnter the desired URL: ");
+			result = sc.nextLine();
+			
+			try {
+				URL url = new URL(result);
+				URLConnection connection = url.openConnection();
+				connection.connect();
+				return url;
+			}
+			catch (MalformedURLException e) {
+				System.out.print("\nError with the URL try again.");
+			} 
+			catch (IOException e) { 
+				System.out.print("\nError with the URL try again.");
+			}
+		}	
+	}
+}

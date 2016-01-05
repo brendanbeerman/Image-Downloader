@@ -13,13 +13,12 @@ public class driver {
 		check_directory();
 		
 		Scanner sc = new Scanner(System.in);
-		String address = get_url(sc); 
+		URL url = get_url(sc); 
 		sc.close();
 		
-		find_images(address);
+		System.out.print("worked");
 	}
 	
-	/* */
 	public static void check_directory () {
 		File directory = new File("images");
 		
@@ -28,9 +27,8 @@ public class driver {
 		directory.mkdir();
 	}
 	
-	/* */
-	public static String get_url (Scanner sc) {
-		System.out.print("\nThe URL needs a 'http://' or 'https://' in the front.");
+	public static URL get_url (Scanner sc) {
+		System.out.print("\nThe URL needs a 'http://' in the front.");
 		String result;
 		
 		while (true) {
@@ -41,7 +39,7 @@ public class driver {
 				URL url = new URL(result);
 				URLConnection connection = url.openConnection();
 				connection.connect();
-				return result;
+				return url;
 			}
 			catch (MalformedURLException e) {
 				System.out.print("\nError with the URL try again.");
@@ -50,13 +48,5 @@ public class driver {
 				System.out.print("\nError with the URL try again.");
 			}
 		}	
-	}
-	
-	/* */
-	public static void find_images (String address) throws IOException {
-		URL url = new URL(address);
-		URLConnection connection = url.openConnection();
-		connection.connect();
-		// add input stream
 	}
 }

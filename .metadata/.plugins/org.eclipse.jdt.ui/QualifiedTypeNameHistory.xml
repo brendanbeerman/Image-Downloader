@@ -6,4 +6,7 @@
 <fullyQualifiedTypeName name="java.net.MalformedURLException"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
 </qualifiedTypeNameHistroy>

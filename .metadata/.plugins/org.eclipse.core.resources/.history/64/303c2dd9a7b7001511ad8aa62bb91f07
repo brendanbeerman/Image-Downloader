@@ -9,8 +9,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
-import javax.swing.text.AttributeSet;
-import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
@@ -88,27 +86,13 @@ public class driver {
 		InputStreamReader stream_reader = new InputStreamReader(stream);
 		BufferedReader reader = new BufferedReader(stream_reader);
 		
-		HTMLEditorKit kit = new HTMLEditorKit();
-		HTMLDocument doc = (HTMLDocument) kit.createDefaultDocument();
+		HTMLEditorKit html_kit = new HTMLEditorKit();
+		HTMLDocument html_doc = (HTMLDocument) html_kit.createDefaultDocument();
 		
 		HTMLEditorKit.Parser parser = new ParserDelegator();
-		HTMLEditorKit.ParserCallback callback = doc.getReader(0);
+		HTMLEditorKit.ParserCallback callback = html_doc.getReader(0);
 		parser.parse(reader, callback, true);
 		
-		for (HTMLDocument.Iterator iterator = doc.getIterator(HTML.Tag.IMG); iterator.isValid(); iterator.next()) {
-			AttributeSet attribute = iterator.getAttributes();
-			String image_name = (String) attribute.getAttribute(HTML.Attribute.SRC);
-			
-			if (image != null && (image.endsWith("png") || image.endsWith("jpg") || image.endsWith("jpeg") || image.endsWith("gif"))) {
-				download_image(image_name);
-			}
-		}
-	}
-	
-	/*
-	 * 
-	 */
-	public static void download_image(String name) {
-		
+		for (HTMLDocument.Iterator iterator =)
 	}
 }

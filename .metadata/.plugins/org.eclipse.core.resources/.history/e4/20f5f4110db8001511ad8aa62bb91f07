@@ -105,9 +105,6 @@ public class driver {
 		}
 	}
 	
-	/*
-	 * 
-	 */
 	public static void download_image(String name) {
 		
 	}

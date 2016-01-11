@@ -97,18 +97,7 @@ public class driver {
 		
 		for (HTMLDocument.Iterator iterator = doc.getIterator(HTML.Tag.IMG); iterator.isValid(); iterator.next()) {
 			AttributeSet attribute = iterator.getAttributes();
-			String image_name = (String) attribute.getAttribute(HTML.Attribute.SRC);
-			
-			if (image != null && (image.endsWith("png") || image.endsWith("jpg") || image.endsWith("jpeg") || image.endsWith("gif"))) {
-				download_image(image_name);
-			}
+			String image = (String) attribute.getAttribute(HTML.Attribute.SRC);
 		}
-	}
-	
-	/*
-	 * 
-	 */
-	public static void download_image(String name) {
-		
 	}
 }

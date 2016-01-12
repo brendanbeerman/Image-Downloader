@@ -1,5 +1,4 @@
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -98,10 +97,10 @@ public class driver {
 		
 		for (HTMLDocument.Iterator iterator = doc.getIterator(HTML.Tag.IMG); iterator.isValid(); iterator.next()) {
 			AttributeSet attribute = iterator.getAttributes();
-			String image = (String) attribute.getAttribute(HTML.Attribute.SRC);
+			String image_name = (String) attribute.getAttribute(HTML.Attribute.SRC);
 			
 			if (image != null && (image.endsWith("png") || image.endsWith("jpg") || image.endsWith("jpeg") || image.endsWith("gif"))) {
-				download_image(address, image);
+				download_image(image_name);
 			}
 		}
 	}
@@ -109,13 +108,7 @@ public class driver {
 	/*
 	 * 
 	 */
-	public static void download_image(String address, String image_source) {
-		BufferedImage image;
+	public static void download_image(String name) {
 		
-		if (image_source.startsWith("http")) { // also cover https
-			address = image_source;
-		} else {
-			address += image_source;
-		}
 	}
 }

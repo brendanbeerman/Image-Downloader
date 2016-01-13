@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -21,7 +22,7 @@ public class driver {
 	
 	public static String directory_name = "images";
 	
-	public static void main (String args[]) throws IOException {
+	public static void main (String args[]) throws IOException, BadLocationException {
 		check_directory();
 		
 		Scanner sc = new Scanner(System.in);
@@ -84,7 +85,7 @@ public class driver {
 	/* 
 	 * 
 	 */
-	public static void find_images (String address) throws IOException {
+	public static void find_images (String address) throws IOException, BadLocationException {
 		URLConnection connection = make_connection(address);
 		
 		InputStream stream = connection.getInputStream();
@@ -93,16 +94,17 @@ public class driver {
 		
 		HTMLEditorKit kit = new HTMLEditorKit();
 		HTMLDocument doc = (HTMLDocument) kit.createDefaultDocument();
+		kit.read(reader, doc, 0);
 		
-		HTMLEditorKit.Parser parser = new ParserDelegator();
-		HTMLEditorKit.ParserCallback callback = doc.getReader(0);
-		parser.parse(reader, callback, true);
-		
-		for (HTMLDocument.Iterator iterator = doc.getIterator(HTML.Tag.IMG); iterator.isValid(); iterator.next()) {
+		for (HTMLDocument.Iterator iterator = doc.getIterator(HTML.Tag.A); iterator.isValid(); iterator.next()) {
 			AttributeSet attribute = iterator.getAttributes();
-			String image = (String) attribute.getAttribute(HTML.Attribute.SRC);
+			String image = (String) attribute.getAttribute(HTML.Attribute.HREF);
+			
+			System.out.print("\n"+image);
 			
 			if (image != null && (image.endsWith("png") || image.endsWith("jpg") || image.endsWith("jpeg") || image.endsWith("gif"))) {
+				System.out.print("\n"+address);
+				System.out.print("\n"+image);
 				download_image(address, image);
 			}
 		}
@@ -111,14 +113,12 @@ public class driver {
 	/*
 	 * 
 	 */
-	public static void download_image(String address, String image_source) throws IOException {		
-		/*if (image_source.startsWith("http")) { // also cover https
+	public static void download_image(String address, String image_source) throws IOException {				
+		if (image_source.startsWith("http")) { // also cover https
 			address = image_source;
 		} else {
 			address += image_source;
-		}*/
-		
-		System.out.print("\n"+address);System.out.print("\n"+image_source);
+		}
 		
 		image_source = image_source.substring(image_source.lastIndexOf("/") +1);
 		String file_format = image_source.substring(image_source.lastIndexOf(".") +1);

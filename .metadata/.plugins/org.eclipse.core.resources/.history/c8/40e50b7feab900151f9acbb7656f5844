@@ -112,13 +112,11 @@ public class driver {
 	 * 
 	 */
 	public static void download_image(String address, String image_source) throws IOException {		
-		/*if (image_source.startsWith("http")) { // also cover https
+		if (image_source.startsWith("http")) { // also cover https
 			address = image_source;
 		} else {
 			address += image_source;
-		}*/
-		
-		System.out.print("\n"+address);System.out.print("\n"+image_source);
+		}
 		
 		image_source = image_source.substring(image_source.lastIndexOf("/") +1);
 		String file_format = image_source.substring(image_source.lastIndexOf(".") +1);
@@ -127,7 +125,7 @@ public class driver {
 		
 		BufferedImage image = ImageIO.read(image_url);
 		
-		File directory = new File(directory_name + "/" + image_source);
+		File directory = new File(directory_name);
 		ImageIO.write(image, file_format, directory);
 	}
 }

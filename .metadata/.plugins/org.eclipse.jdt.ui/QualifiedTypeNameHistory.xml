@@ -16,4 +16,5 @@
 <fullyQualifiedTypeName name="javax.swing.text.AttributeSet"/>
 <fullyQualifiedTypeName name="javax.swing.text.html.HTML"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImage"/>
+<fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
 </qualifiedTypeNameHistroy>

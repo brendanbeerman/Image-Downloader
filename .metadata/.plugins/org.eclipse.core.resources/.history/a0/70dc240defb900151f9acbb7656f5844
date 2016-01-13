@@ -127,7 +127,7 @@ public class driver {
 		
 		BufferedImage image = ImageIO.read(image_url);
 		
-		File directory = new File(directory_name + "/" + image_source);
+		File directory = new File(directory_name);
 		ImageIO.write(image, file_format, directory);
 	}
 }

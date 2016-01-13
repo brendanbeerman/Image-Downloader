@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLDocument;
@@ -18,6 +19,7 @@ import javax.swing.text.html.parser.ParserDelegator;
 
 public class driver {
 	
+	public static String directory_name = "images";
 	
 	public static void main (String args[]) throws IOException {
 		check_directory();
@@ -35,7 +37,7 @@ public class driver {
 	 * If not make the directory
 	 */
 	public static void check_directory () {
-		File directory = new File("images");
+		File directory = new File(directory_name);
 		
 		if (directory.exists()) return;
 		
@@ -109,13 +111,21 @@ public class driver {
 	/*
 	 * 
 	 */
-	public static void download_image(String address, String image_source) {
-		BufferedImage image;
-		
+	public static void download_image(String address, String image_source) throws IOException {		
 		if (image_source.startsWith("http")) { // also cover https
 			address = image_source;
 		} else {
 			address += image_source;
 		}
+		
+		image_source = image_source.substring(image_source.lastIndexOf("/") +1);
+		String file_format = image_source.substring(image_source.lastIndexOf(".") +1);
+		
+		URL image_url = new URL(address);
+		
+		BufferedImage image = ImageIO.read(image_url);
+		
+		File directory = new File(directory_name);
+		ImageIO.write(image, file_format, directory);
 	}
 }

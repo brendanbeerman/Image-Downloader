@@ -22,14 +22,14 @@ public class driver {
 	
 	public static String directory_name = "images";
 	
-	public static void main (String args[]) {
+	public static void main (String args[]) throws IOException, BadLocationException {
 		check_directory();
 		
 		Scanner sc = new Scanner(System.in);
 		String address = get_url(sc); 
 		sc.close();
 		
-		//find_images(address);
+		find_images(address);
 	}
 	
 	/*
@@ -45,6 +45,9 @@ public class driver {
 		directory.mkdir();
 	}
 	
+	/* 
+	 * 
+	 */
 	public static String get_url (Scanner sc) {
 		System.out.print("\nThe URL needs a 'http://' or 'https://' in the front.");
 		String result;
@@ -82,15 +85,49 @@ public class driver {
 	/* 
 	 * 
 	 */
-	public static void find_images (String address) {
-
+	public static void find_images (String address) throws IOException, BadLocationException {
+		URLConnection connection = make_connection(address);
+		
+		InputStream stream = connection.getInputStream();
+		InputStreamReader stream_reader = new InputStreamReader(stream);
+		BufferedReader reader = new BufferedReader(stream_reader);
+		
+		HTMLEditorKit kit = new HTMLEditorKit();
+		HTMLDocument doc = (HTMLDocument) kit.createDefaultDocument();
+		kit.read(reader, doc, 0);
+		
+		for (HTMLDocument.Iterator iterator = doc.getIterator(HTML.Tag.A); iterator.isValid(); iterator.next()) {
+			AttributeSet attribute = iterator.getAttributes();
+			String image = (String) attribute.getAttribute(HTML.Attribute.HREF);
+			
+			System.out.print("\n"+image);
+			
+			if (image != null && (image.endsWith("png") || image.endsWith("jpg") || image.endsWith("jpeg") || image.endsWith("gif"))) {
+				System.out.print("\n"+address);
+				System.out.print("\n"+image);
+				download_image(address, image);
+			}
+		}
 	}
 	
 	/*
 	 * 
 	 */
-	public static void download_image() {				
-		String address = "http://s.4cdn.org/image/fp/atlantis_longcat2.png";
+	public static void download_image(String address, String image_source) throws IOException {				
+		if (image_source.startsWith("http")) { // also cover https
+			address = image_source;
+		} else {
+			address += image_source;
+		}
 		
+		image_source = image_source.substring(image_source.lastIndexOf("/") +1);
+		String file_format = image_source.substring(image_source.lastIndexOf(".") +1);
+		
+		URL image_url = new URL(address);
+		
+		BufferedImage image = ImageIO.read(image_url);
+		
+		File directory = new File(directory_name + "/" + image_source);
+		ImageIO.write(image, file_format, directory);
 	}
 }

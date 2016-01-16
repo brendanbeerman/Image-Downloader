@@ -1,6 +1,8 @@
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,8 +91,18 @@ public class driver {
 	/*
 	 * 
 	 */
-	public static void download_image() {				
+	public static void download_image() throws IOException {				
 		String address = "http://s.4cdn.org/image/fp/atlantis_longcat2.png";
-		
+		try {
+			URL url = new URL(address);
+			InputStream input = new BufferedInputStream(url.openStream()); 
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			byte[] buffer = new byte[1024];
+			while (input.read(buffer) != -1) {
+				
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}		
 	}
 }

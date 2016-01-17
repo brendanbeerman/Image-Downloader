@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,8 +22,7 @@ import javax.swing.text.html.parser.ParserDelegator;
 
 public class driver {
 	
-	public static String main_directory = "images";
-	public static String temp_directory = "temp";
+	public static String directory_name = "images";
 	
 	public static void main (String args[]) throws IOException {
 		//check_directory();
@@ -47,7 +45,7 @@ public class driver {
 		
 		if (directory.exists()) return;
 		
-		directory.mkdir();		
+		directory.mkdir();
 	}
 	
 	public static String get_url (Scanner sc) {
@@ -99,19 +97,15 @@ public class driver {
 		try {
 			URL url = new URL(address);
 			InputStream input = new BufferedInputStream(url.openStream()); 
-			ByteArrayOutputStream byte_output = new ByteArrayOutputStream();
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
 			
 			while (input.read(buffer) != -1) {
-				byte_output.write(buffer, 0, input.read(buffer));
+				output.write(buffer, 0, input.read(buffer));
 			}
 			
 			input.close();
-			byte_output.close();
-			
-			byte[] response = byte_output.toByteArray();
-			
-			FileOutputStream file_output = new FileOutputStream(temp_directory);
+			output.close();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}		

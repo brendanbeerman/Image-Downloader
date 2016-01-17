@@ -27,16 +27,14 @@ public class driver {
 	public static String temp_directory = "temp";
 	
 	public static void main (String args[]) throws IOException {
-		String word = "http://s.4cdn.org/image/fp/atlantis_longcat2.png";
-		//check_directory(main_directory);
-		//check_directory(temp_directory);
+		//check_directory();
 		
 		//Scanner sc = new Scanner(System.in);
 		//String address = get_url(sc); 
 		//sc.close();
 		
 		//find_images(address);
-		download_image(word);
+		download_image();
 	}
 	
 	/*
@@ -44,8 +42,8 @@ public class driver {
 	 * If so return to the main 
 	 * If not make the directory
 	 */
-	public static void check_directory (String dir) {
-		File directory = new File(dir);
+	public static void check_directory () {
+		File directory = new File(directory_name);
 		
 		if (directory.exists()) return;
 		
@@ -96,7 +94,8 @@ public class driver {
 	/*
 	 * 
 	 */
-	public static void download_image(String address) throws IOException {				
+	public static void download_image() throws IOException {				
+		String address = "http://s.4cdn.org/image/fp/atlantis_longcat2.png";
 		try {
 			URL url = new URL(address);
 			InputStream input = new BufferedInputStream(url.openStream()); 
@@ -112,10 +111,7 @@ public class driver {
 			
 			byte[] response = byte_output.toByteArray();
 			
-			FileOutputStream file_output = new FileOutputStream(main_directory);
-			file_output.write(response);
-			
-			file_output.close();
+			FileOutputStream file_output = new FileOutputStream(temp_directory);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}		

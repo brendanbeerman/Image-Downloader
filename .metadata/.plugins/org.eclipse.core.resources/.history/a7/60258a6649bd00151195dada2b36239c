@@ -112,7 +112,7 @@ public class driver {
 			
 			byte[] response = byte_output.toByteArray();
 			
-			FileOutputStream file_output = new FileOutputStream(main_directory);
+			FileOutputStream file_output = new FileOutputStream(temp_directory);
 			file_output.write(response);
 			
 			file_output.close();

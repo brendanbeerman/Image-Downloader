@@ -1,25 +1,13 @@
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
-
-import javax.imageio.ImageIO;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.parser.ParserDelegator;
 
 public class driver {
 	
@@ -28,15 +16,15 @@ public class driver {
 	
 	public static void main (String args[]) throws IOException {
 		String word = "http://s.4cdn.org/image/fp/atlantis_longcat2.png";
-		//check_directory(main_directory);
-		//check_directory(temp_directory);
+		checkDirectory(main_directory);
+		checkDirectory(temp_directory);
 		
 		//Scanner sc = new Scanner(System.in);
 		//String address = get_url(sc); 
 		//sc.close();
 		
 		//find_images(address);
-		download_image(word);
+		downloadImage(word);
 	}
 	
 	/*
@@ -44,7 +32,7 @@ public class driver {
 	 * If so return to the main 
 	 * If not make the directory
 	 */
-	public static void check_directory (String dir) {
+	public static void checkDirectory (String dir) {
 		File directory = new File(dir);
 		
 		if (directory.exists()) return;
@@ -52,7 +40,7 @@ public class driver {
 		directory.mkdir();		
 	}
 	
-	public static String get_url (Scanner sc) {
+	public static String getURL (Scanner sc) {
 		System.out.print("\nThe URL needs a 'http://' or 'https://' in the front.");
 		String result;
 		
@@ -60,7 +48,7 @@ public class driver {
 			System.out.print("\nEnter the desired URL: ");
 			result = sc.nextLine();
 			
-			if (make_connection(result) != null) {
+			if (testConnection(result) != null) {
 				return result;
 			}
 		}	
@@ -69,7 +57,7 @@ public class driver {
 	/* 
 	 * 
 	 */
-	public static URLConnection make_connection (String s) {
+	public static URLConnection testConnection (String s) {
 		try {
 			URL url = new URL(s);
 			URLConnection connection = url.openConnection();
@@ -89,35 +77,27 @@ public class driver {
 	/* 
 	 * 
 	 */
-	public static void find_images (String address) {
+	public static void findImageURLs (String address) {
 
 	}
 	
 	/*
 	 * 
 	 */
-	public static void download_image(String address) throws IOException {				
-		try {
-			URL url = new URL(address);
-			InputStream input = new BufferedInputStream(url.openStream()); 
-			ByteArrayOutputStream byte_output = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
-			
-			while (input.read(buffer) != -1) {
-				byte_output.write(buffer, 0, input.read(buffer));
-			}
-			
-			input.close();
-			byte_output.close();
-			
-			byte[] response = byte_output.toByteArray();
-			
-			FileOutputStream file_output = new FileOutputStream(main_directory);
-			file_output.write(response);
-			
-			file_output.close();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}		
+	public static void downloadImage(String address) throws IOException {				
+		URL url = new URL(address);
+		String image_name = url.getFile();
+		String destination_path = "./Images/" +image_name.substring(image_name.lastIndexOf("/"));
+		
+		InputStream input = url.openStream();
+		OutputStream output = new FileOutputStream(destination_path);
+		
+		int length;
+		byte []b = new byte[2048];
+		
+		while ((length = input.read(b)) != -1) output.write(b, 0, length);
+		
+		input.close();
+		output.close();
 	}
 }

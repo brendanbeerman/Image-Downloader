@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class driver {
@@ -33,12 +34,12 @@ public class driver {
 		//String address = get_url(sc); 
 		//sc.close();
 		
-		findImageURLs(word);
+		ArrayList<String> links = findImageURLs (word);
 		//downloadImage(word);
 	}
 	
 	/*
-	 * Checks if a directory exists or not
+	 * Simply checks if a directory exists or not
 	 * If so return to the main 
 	 * If not make the directory
 	 */
@@ -96,8 +97,8 @@ public class driver {
 	/* 
 	 * 
 	 */
-	public static void findImageURLs (String address) throws MalformedURLException {
-		URL url = new URL(address);
+	public static void findImageURLs (String address) {
+
 	}
 	
 	/*

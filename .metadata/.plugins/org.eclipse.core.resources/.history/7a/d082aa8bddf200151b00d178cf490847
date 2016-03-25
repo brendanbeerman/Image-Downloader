@@ -96,7 +96,7 @@ public class driver {
 	/* 
 	 * 
 	 */
-	public static void findImageURLs (String address) throws MalformedURLException {
+	public static void findImageURLs (String address) {
 		URL url = new URL(address);
 	}
 	
